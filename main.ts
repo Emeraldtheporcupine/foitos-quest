@@ -72,8 +72,27 @@ tiles.setCurrentTilemap(tilemap`Grassy Yards`)
 tiles.placeOnTile(Character, tiles.getTileLocation(0, 8))
 music.play(music.createSong(assets.song`Grassy Yards`), music.PlaybackMode.LoopingInBackground)
 Direction = 1
+let Cutscene = false
 State = "Idle"
 SpawnStuff()
+game.onUpdate(function () {
+    if (!(State == "Rolling") || !(Cutscene == true)) {
+        if (controller.right.isPressed()) {
+            Character.vx += 2
+        } else if (controller.left.isPressed()) {
+            Character.vx += -2
+        } else {
+            Character.vx += Character.vx * -0.1
+        }
+    } else {
+        Character.vx += Character.vx * -0.1
+    }
+    if (Character.vx > 65) {
+        Character.vx = 65
+    } else if (Character.vx < -65) {
+        Character.vx = -65
+    }
+})
 game.onUpdate(function () {
     if (Character.vx < 5 && Character.vx > -5 && State == "Rolling") {
         animation.stopAnimation(animation.AnimationTypes.All, Character)
@@ -86,14 +105,14 @@ game.onUpdate(function () {
             animation.runImageAnimation(
             Character,
             assets.animation`RollR`,
-            100,
+            75,
             true
             )
         } else if (Direction == -1) {
             animation.runImageAnimation(
             Character,
             assets.animation`RollL`,
-            100,
+            75,
             true
             )
         }
@@ -127,23 +146,5 @@ game.onUpdate(function () {
         }
         console.log(Character.vx)
         console.log(State)
-    }
-})
-game.onUpdate(function () {
-    if (!(State == "Rolling")) {
-        if (controller.right.isPressed()) {
-            Character.vx += 2
-        } else if (controller.left.isPressed()) {
-            Character.vx += -2
-        } else {
-            Character.vx += Character.vx * -0.1
-        }
-    } else {
-        Character.vx += Character.vx * -0.1
-    }
-    if (Character.vx > 65) {
-        Character.vx = 65
-    } else if (Character.vx < -65) {
-        Character.vx = -65
     }
 })
