@@ -72,6 +72,7 @@ tiles.setCurrentTilemap(tilemap`Grassy Yards`)
 tiles.placeOnTile(Character, tiles.getTileLocation(0, 8))
 music.play(music.createSong(assets.song`Grassy Yards`), music.PlaybackMode.LoopingInBackground)
 Direction = 1
+let Level = 1
 let Cutscene = false
 State = "Idle"
 SpawnStuff()
