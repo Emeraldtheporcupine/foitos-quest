@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const HUD = SpriteKind.create()
+    export const Background = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
@@ -9,6 +10,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function SpawnStuff () {
+    Tree = sprites.create(assets.image`tree`, SpriteKind.Background)
+    tiles.placeOnTile(Tree, tiles.getTileLocation(76, 6))
+    Tree.z = -2
     for (let AppleSpawn of tiles.getTilesByType(assets.tile`AppleSpawn`)) {
         AppleSprite = sprites.create(assets.image`Apple`, SpriteKind.Food)
         tiles.placeOnTile(AppleSprite, AppleSpawn)
@@ -81,6 +85,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 let AppleSprite2: Sprite = null
 let AppleSprite: Sprite = null
+let Tree: Sprite = null
 let CutSprite: Sprite = null
 let State = ""
 let Cutscene = false
