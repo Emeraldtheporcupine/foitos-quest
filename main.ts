@@ -2,8 +2,10 @@ namespace SpriteKind {
     export const HUD = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Character.vy == 0) {
-        Character.vy = -100
+    if (Cutscene == false) {
+        if (Character.vy == 0) {
+            Character.vy = -100
+        }
     }
 })
 function SpawnStuff () {
@@ -46,7 +48,7 @@ function SetupAnim () {
     )
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
-    if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7) {
+    if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7 && Cutscene == false) {
         Cutscene = true
         CutSprite.z = 2
         CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
@@ -59,9 +61,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    characterAnimations.clearCharacterState(Character)
-    State = "Roll"
-    Character.vx = Direction * 150
+    if (Cutscene == false) {
+        characterAnimations.clearCharacterState(Character)
+        State = "Roll"
+        Character.vx = Direction * 150
+    }
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Food, function (sprite, otherSprite) {
     sprite.vy = -25
@@ -217,25 +221,6 @@ CutSprite = sprites.create(img`
     `, SpriteKind.HUD)
 SpawnStuff()
 game.onUpdate(function () {
-    if (!(State == "Rolling") || Cutscene == false) {
-        if (controller.right.isPressed()) {
-            Character.vx += 2
-        } else if (controller.left.isPressed()) {
-            Character.vx += -2
-        } else {
-            Character.vx += Character.vx * -0.1
-        }
-    } else {
-        Character.vx += Character.vx * -0.1
-    }
-    if (Character.vx > 65) {
-        Character.vx = 65
-    } else if (Character.vx < -65) {
-        Character.vx = -65
-    }
-    console.log(Cutscene)
-})
-game.onUpdate(function () {
     if (Character.vx < 5 && Character.vx > -5 && State == "Rolling") {
         animation.stopAnimation(animation.AnimationTypes.All, Character)
         State = "Idle"
@@ -286,5 +271,27 @@ game.onUpdate(function () {
                 characterAnimations.setCharacterState(Character, characterAnimations.rule(Predicate.NotMoving, Predicate.FacingLeft))
             }
         }
+    }
+})
+game.onUpdate(function () {
+    if (Cutscene == false) {
+        if (!(State == "Rolling")) {
+            if (controller.right.isPressed()) {
+                Character.vx += 2
+            } else if (controller.left.isPressed()) {
+                Character.vx += -2
+            } else {
+                Character.vx += Character.vx * -0.1
+            }
+        } else {
+            Character.vx += Character.vx * -0.1
+        }
+        if (Character.vx > 65) {
+            Character.vx = 65
+        } else if (Character.vx < -65) {
+            Character.vx = -65
+        }
+    } else {
+        Character.vx += Character.vx * -0.1
     }
 })
