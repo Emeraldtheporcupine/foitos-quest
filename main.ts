@@ -1,7 +1,15 @@
 namespace SpriteKind {
     export const HUD = SpriteKind.create()
     export const Background = SpriteKind.create()
+    export const Fling = SpriteKind.create()
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Cutscene == false) {
+        characterAnimations.clearCharacterState(Character)
+        State = "Roll"
+        Character.vx = Direction * 150
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
         if (Character.vy == 0) {
@@ -25,6 +33,11 @@ function SpawnStuff () {
         tiles.setTileAt(AppleSpawn, assets.tile`G1-2`)
     }
 }
+sprites.onOverlap(SpriteKind.Food, SpriteKind.Food, function (sprite, otherSprite) {
+    sprite.vy = -25
+    sprite.x += -1
+    otherSprite.x += 1
+})
 function SetupAnim () {
     characterAnimations.loopFrames(
     Character,
@@ -51,6 +64,40 @@ function SetupAnim () {
     characterAnimations.rule(Predicate.Moving, Predicate.FacingLeft)
     )
 }
+function cutscene () {
+    Saw = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Fling)
+    animation.runImageAnimation(
+    Saw,
+    assets.animation`SawBlade`,
+    50,
+    true
+    )
+    Saw.setFlag(SpriteFlag.Ghost, true)
+    Saw.setPosition(scene.cameraProperty(CameraProperty.X) + 100, scene.cameraProperty(CameraProperty.Y))
+    Saw.vx = -200
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    sprites.destroy(otherSprite)
+    music.play(music.createSoundEffect(WaveShape.Noise, 975, 971, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
     if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7 && Cutscene == false) {
         music.stopAllSounds()
@@ -64,25 +111,12 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
         false
         )
         music.play(music.createSong(assets.song`Cutscene 1`), music.PlaybackMode.LoopingInBackground)
+        timer.after(1000, function () {
+            cutscene()
+        })
     }
 })
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Cutscene == false) {
-        characterAnimations.clearCharacterState(Character)
-        State = "Roll"
-        Character.vx = Direction * 150
-    }
-})
-sprites.onOverlap(SpriteKind.Food, SpriteKind.Food, function (sprite, otherSprite) {
-    sprite.vy = -25
-    sprite.x += -1
-    otherSprite.x += 1
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-    info.changeScoreBy(1)
-    sprites.destroy(otherSprite)
-    music.play(music.createSoundEffect(WaveShape.Noise, 975, 971, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
-})
+let Saw: Sprite = null
 let AppleSprite2: Sprite = null
 let AppleSprite: Sprite = null
 let Tree: Sprite = null
