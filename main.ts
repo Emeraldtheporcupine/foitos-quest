@@ -49,6 +49,7 @@ function SetupAnim () {
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
     if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7 && Cutscene == false) {
+        music.stopAllSounds()
         Cutscene = true
         CutSprite.z = 2
         CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
@@ -58,6 +59,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
         100,
         false
         )
+        music.play(music.createSong(assets.song`Cutscene 1`), music.PlaybackMode.LoopingInBackground)
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
