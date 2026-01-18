@@ -2,6 +2,7 @@ namespace SpriteKind {
     export const HUD = SpriteKind.create()
     export const BackgroundTree = SpriteKind.create()
     export const Fling = SpriteKind.create()
+    export const Claw = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
@@ -70,43 +71,91 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
     }
 })
 function cutscene () {
-    Saw = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Fling)
-    animation.runImageAnimation(
-    Saw,
-    assets.animation`SawBlade`,
-    50,
-    true
-    )
-    Saw.setFlag(SpriteFlag.GhostThroughWalls, true)
-    Saw.setPosition(scene.cameraProperty(CameraProperty.X) + 100, scene.cameraProperty(CameraProperty.Y))
-    Saw.vx = -200
-    TreeHits = 20
+    if (CutscenePart == 1) {
+        Saw = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Fling)
+        animation.runImageAnimation(
+        Saw,
+        assets.animation`SawBlade`,
+        50,
+        true
+        )
+        Saw.setFlag(SpriteFlag.GhostThroughWalls, true)
+        Saw.setPosition(scene.cameraProperty(CameraProperty.X) + 100, scene.cameraProperty(CameraProperty.Y))
+        Saw.vx = -200
+        TreeHits = 20
+    } else if (CutscenePart == 2) {
+    	
+    } else if (CutscenePart == 3) {
+        Claw = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Claw)
+        animation.runImageAnimation(
+        Claw,
+        assets.animation`clawHover`,
+        100,
+        true
+        )
+        Claw.setPosition(Tree.x - 24, scene.cameraProperty(CameraProperty.Y) + 80)
+        Claw.vy = 100
+    }
 }
 sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite, otherSprite) {
     if (TreeHits > 1) {
+        CutscenePart = 2
         TreeHits += -1
         sprite.vx = -200
         sprite.x += 5
-        scene.cameraShake(3, 200)
+        scene.cameraShake(2, 200)
     } else {
         Saw.setFlag(SpriteFlag.Ghost, true)
+        Saw.setFlag(SpriteFlag.AutoDestroy, true)
+        timer.background(function () {
+            for (let index = 0; index < 15; index++) {
+                sprite.x += 1
+            }
+        })
+        animation.runImageAnimation(
+        otherSprite,
+        assets.animation`treeFall`,
+        50,
+        false
+        )
+        timer.after(500, function () {
+            CutscenePart = 3
+            cutscene()
+        })
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -126,6 +175,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     sprites.destroy(otherSprite)
     music.play(music.createSoundEffect(WaveShape.Noise, 975, 971, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
 })
+let Claw: Sprite = null
 let TreeHits = 0
 let Saw: Sprite = null
 let AppleSprite2: Sprite = null
@@ -136,7 +186,9 @@ let State = ""
 let Cutscene = false
 let Direction = 0
 let Character: Sprite = null
+let CutscenePart = 0
 scene.setBackgroundColor(8)
+CutscenePart = 1
 Character = sprites.create(assets.image`Character`, SpriteKind.Player)
 characterAnimations.setCharacterState(Character, characterAnimations.rule(Predicate.NotMoving, Predicate.FacingRight))
 scene.cameraFollowSprite(Character)
