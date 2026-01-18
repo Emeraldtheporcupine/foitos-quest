@@ -254,6 +254,7 @@ function cutscene () {
         Claw.vy = 35
         Claw.setFlag(SpriteFlag.GhostThroughWalls, true)
         scene.centerCameraAt(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y) - 6)
+        CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
     }
 }
 sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite, otherSprite) {
