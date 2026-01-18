@@ -1,15 +1,8 @@
 namespace SpriteKind {
     export const HUD = SpriteKind.create()
-    export const Background = SpriteKind.create()
+    export const BackgroundTree = SpriteKind.create()
     export const Fling = SpriteKind.create()
 }
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Cutscene == false) {
-        characterAnimations.clearCharacterState(Character)
-        State = "Roll"
-        Character.vx = Direction * 150
-    }
-})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
         if (Character.vy == 0) {
@@ -18,7 +11,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function SpawnStuff () {
-    Tree = sprites.create(assets.image`tree`, SpriteKind.Background)
+    Tree = sprites.create(assets.image`tree`, SpriteKind.BackgroundTree)
     tiles.placeOnTile(Tree, tiles.getTileLocation(76, 6))
     Tree.z = -2
     for (let AppleSpawn of tiles.getTilesByType(assets.tile`AppleSpawn`)) {
@@ -33,11 +26,6 @@ function SpawnStuff () {
         tiles.setTileAt(AppleSpawn, assets.tile`G1-2`)
     }
 }
-sprites.onOverlap(SpriteKind.Food, SpriteKind.Food, function (sprite, otherSprite) {
-    sprite.vy = -25
-    sprite.x += -1
-    otherSprite.x += 1
-})
 function SetupAnim () {
     characterAnimations.loopFrames(
     Character,
@@ -64,6 +52,23 @@ function SetupAnim () {
     characterAnimations.rule(Predicate.Moving, Predicate.FacingLeft)
     )
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
+    if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7 && Cutscene == false) {
+        music.stopAllSounds()
+        Cutscene = true
+        CutSprite.z = 2
+        animation.runImageAnimation(
+        CutSprite,
+        assets.animation`Cutscene Bars`,
+        100,
+        false
+        )
+        music.play(music.createSong(assets.song`Cutscene 1`), music.PlaybackMode.LoopingInBackground)
+        timer.after(1000, function () {
+            cutscene()
+        })
+    }
+})
 function cutscene () {
     Saw = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -89,33 +94,39 @@ function cutscene () {
     50,
     true
     )
-    Saw.setFlag(SpriteFlag.Ghost, true)
+    Saw.setFlag(SpriteFlag.GhostThroughWalls, true)
     Saw.setPosition(scene.cameraProperty(CameraProperty.X) + 100, scene.cameraProperty(CameraProperty.Y))
     Saw.vx = -200
+    TreeHits = 20
 }
+sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite, otherSprite) {
+    if (TreeHits > 1) {
+        TreeHits += -1
+        sprite.vx = -200
+        sprite.x += 5
+        scene.cameraShake(3, 200)
+    } else {
+        Saw.setFlag(SpriteFlag.Ghost, true)
+    }
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Cutscene == false) {
+        characterAnimations.clearCharacterState(Character)
+        State = "Roll"
+        Character.vx = Direction * 150
+    }
+})
+sprites.onOverlap(SpriteKind.Food, SpriteKind.Food, function (sprite, otherSprite) {
+    sprite.vy = -25
+    sprite.x += -1
+    otherSprite.x += 1
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     info.changeScoreBy(1)
     sprites.destroy(otherSprite)
     music.play(music.createSoundEffect(WaveShape.Noise, 975, 971, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
 })
-scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
-    if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7 && Cutscene == false) {
-        music.stopAllSounds()
-        Cutscene = true
-        CutSprite.z = 2
-        CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
-        animation.runImageAnimation(
-        CutSprite,
-        assets.animation`Cutscene Bars`,
-        100,
-        false
-        )
-        music.play(music.createSong(assets.song`Cutscene 1`), music.PlaybackMode.LoopingInBackground)
-        timer.after(1000, function () {
-            cutscene()
-        })
-    }
-})
+let TreeHits = 0
 let Saw: Sprite = null
 let AppleSprite2: Sprite = null
 let AppleSprite: Sprite = null
@@ -313,6 +324,7 @@ game.onUpdate(function () {
             }
         }
     }
+    CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
 })
 game.onUpdate(function () {
     if (Cutscene == false) {
