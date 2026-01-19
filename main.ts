@@ -285,6 +285,12 @@ sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite,
             CutscenePart = 3
             cutscene()
         })
+        animation.runImageAnimation(
+        Character,
+        assets.animation`IdleL`,
+        200,
+        true
+        )
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
