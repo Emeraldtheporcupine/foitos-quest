@@ -287,6 +287,7 @@ sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite,
         false
         )
         timer.after(500, function () {
+            Direction = -1
             CutscenePart = 3
             cutscene()
         })
