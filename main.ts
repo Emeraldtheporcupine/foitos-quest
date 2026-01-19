@@ -226,35 +226,37 @@ function cutscene () {
     } else if (CutscenePart == 2) {
     	
     } else if (CutscenePart == 3) {
-        Claw = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.Claw)
-        animation.runImageAnimation(
-        Claw,
-        assets.animation`clawHover`,
-        100,
-        true
-        )
-        Claw.setPosition(Tree.x - 24, scene.cameraProperty(CameraProperty.Y) - 80)
-        Claw.vy = 35
-        Claw.setFlag(SpriteFlag.GhostThroughWalls, true)
-        scene.centerCameraAt(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y) - 6)
-        CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
+        timer.after(1000, function () {
+            Claw = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.Claw)
+            animation.runImageAnimation(
+            Claw,
+            assets.animation`clawHover`,
+            100,
+            true
+            )
+            Claw.setPosition(Tree.x - 24, scene.cameraProperty(CameraProperty.Y) - 80)
+            Claw.vy = 35
+            Claw.setFlag(SpriteFlag.GhostThroughWalls, true)
+            scene.centerCameraAt(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y) - 6)
+            CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
+        })
     }
 }
 sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite, otherSprite) {
