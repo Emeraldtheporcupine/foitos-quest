@@ -194,6 +194,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
         })
     }
 })
+sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
+    timer.after(1000, function () {
+        Character.ax = 300
+    })
+})
 function cutscene () {
     if (CutscenePart == 1) {
         Saw = sprites.create(img`
@@ -285,13 +290,6 @@ sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite,
             CutscenePart = 3
             cutscene()
         })
-        animation.stopAnimation(animation.AnimationTypes.All, Character)
-        animation.runImageAnimation(
-        Character,
-        assets.animation`IdleL`,
-        200,
-        true
-        )
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
