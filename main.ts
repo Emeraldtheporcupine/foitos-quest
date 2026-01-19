@@ -360,6 +360,7 @@ Character.ay = 300
 SetupAnim()
 tiles.setCurrentTilemap(tilemap`Grassy Yards`)
 tiles.placeOnTile(Character, tiles.getTileLocation(0, 8))
+music.play(music.createSong(assets.song`Introduction0`), music.PlaybackMode.LoopingInBackground)
 Direction = 1
 let Level = 1
 Cutscene = true
