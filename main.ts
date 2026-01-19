@@ -319,6 +319,7 @@ sprites.onOverlap(SpriteKind.Claw, SpriteKind.BackgroundTree, function (sprite, 
             otherSprite.ax = 50
             sprite.setFlag(SpriteFlag.AutoDestroy, true)
             otherSprite.setFlag(SpriteFlag.AutoDestroy, true)
+            otherSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
         })
     })
 })
