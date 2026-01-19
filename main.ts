@@ -285,6 +285,7 @@ sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite,
             CutscenePart = 3
             cutscene()
         })
+        animation.stopAnimation(animation.AnimationTypes.All, Character)
         animation.runImageAnimation(
         Character,
         assets.animation`IdleL`,
