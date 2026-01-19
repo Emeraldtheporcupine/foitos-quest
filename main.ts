@@ -58,6 +58,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
     if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7 && Cutscene == false) {
         music.stopAllSounds()
         Cutscene = true
+        CutscenePart = 1
         CutSprite = sprites.create(img`
             ................................................................................................................................................................
             ................................................................................................................................................................
@@ -383,6 +384,7 @@ timer.after(1000, function () {
                         timer.after(5000, function () {
                             Direction = 1
                             Cutscene = false
+                            music.stopAllSounds()
                             music.play(music.createSong(assets.song`Grassy Yards`), music.PlaybackMode.LoopingInBackground)
                         })
                     })
