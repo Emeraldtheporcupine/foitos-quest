@@ -360,12 +360,36 @@ Character.ay = 300
 SetupAnim()
 tiles.setCurrentTilemap(tilemap`Grassy Yards`)
 tiles.placeOnTile(Character, tiles.getTileLocation(0, 8))
-music.play(music.createSong(assets.song`Grassy Yards`), music.PlaybackMode.LoopingInBackground)
 Direction = 1
 let Level = 1
-Cutscene = false
+Cutscene = true
+CutscenePart = 0
 State = "Idle"
 SpawnStuff()
+timer.after(1000, function () {
+    Character.ax = 64
+    timer.after(3000, function () {
+        Character.ax = 0
+        timer.after(500, function () {
+            Direction = -1
+            Character.sayText("Thank you, Mr. Tree!", 2000, true)
+            timer.after(4000, function () {
+                Character.sayText("What's that you say?", 2000, true)
+                timer.after(4000, function () {
+                    Character.sayText("Trees are being chopped down?!", 3000, true)
+                    timer.after(5000, function () {
+                        Character.sayText("I have to stop who ever is doing this!", 3000, true)
+                        timer.after(5000, function () {
+                            Direction = 1
+                            Cutscene = false
+                            music.play(music.createSong(assets.song`Grassy Yards`), music.PlaybackMode.LoopingInBackground)
+                        })
+                    })
+                })
+            })
+        })
+    })
+})
 game.onUpdate(function () {
     if (Character.vx < 5 && Character.vx > -5 && State == "Rolling") {
         animation.stopAnimation(animation.AnimationTypes.All, Character)
