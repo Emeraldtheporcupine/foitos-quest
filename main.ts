@@ -3,6 +3,7 @@ namespace SpriteKind {
     export const BackgroundTree = SpriteKind.create()
     export const Fling = SpriteKind.create()
     export const Claw = SpriteKind.create()
+    export const TakeAwayTree = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
@@ -251,7 +252,7 @@ function cutscene () {
             100,
             true
             )
-            Claw.setPosition(Tree.x - 24, scene.cameraProperty(CameraProperty.Y) - 80)
+            Claw.setPosition(Tree.x - 18, scene.cameraProperty(CameraProperty.Y) - 80)
             Claw.vy = 35
             Claw.setFlag(SpriteFlag.GhostThroughWalls, true)
             scene.centerCameraAt(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y) - 6)
@@ -292,6 +293,34 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         State = "Roll"
         Character.vx = Direction * 150
     }
+})
+sprites.onOverlap(SpriteKind.Claw, SpriteKind.BackgroundTree, function (sprite, otherSprite) {
+    otherSprite.setKind(SpriteKind.TakeAwayTree)
+    sprite.vy = 0
+    CutscenePart = 4
+    animation.runImageAnimation(
+    sprite,
+    assets.animation`clawYoink`,
+    100,
+    false
+    )
+    timer.after(800, function () {
+        animation.runImageAnimation(
+        sprite,
+        assets.animation`clawFlyAway`,
+        50,
+        true
+        )
+        timer.after(500, function () {
+            CutscenePart = 5
+            sprite.ay = -25
+            sprite.ax = 50
+            otherSprite.ay = -25
+            otherSprite.ax = 50
+            sprite.setFlag(SpriteFlag.AutoDestroy, true)
+            otherSprite.setFlag(SpriteFlag.AutoDestroy, true)
+        })
+    })
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Food, function (sprite, otherSprite) {
     sprite.vy = -25
