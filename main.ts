@@ -196,8 +196,10 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
     }
 })
 sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
-    timer.after(1000, function () {
-        Character.ax = 300
+    Character.ax = -54
+    timer.after(4000, function () {
+        Character.ax = 0
+        Character.sayText("What was that?", 2000, true)
     })
 })
 function cutscene () {
