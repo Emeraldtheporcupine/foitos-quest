@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const Fling = SpriteKind.create()
     export const Claw = SpriteKind.create()
     export const TakeAwayTree = SpriteKind.create()
+    export const BigNoms = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
@@ -26,6 +27,34 @@ function SpawnStuff () {
         AppleSprite2.ay = 300
         AppleSprite2.x += randint(0, 7)
         tiles.setTileAt(AppleSpawn, assets.tile`G1-2`)
+    }
+    for (let gAppleSpawn of tiles.getTilesByType(assets.tile`GoldenApple`)) {
+        gApple = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.BigNoms)
+        tiles.placeOnTile(gApple, gAppleSpawn)
+        animation.runImageAnimation(
+        gApple,
+        assets.animation`GoldenAppel`,
+        200,
+        true
+        )
+        tiles.setTileAt(gAppleSpawn, assets.tile`transparency16`)
     }
 }
 function SetupAnim () {
@@ -390,6 +419,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 let Claw: Sprite = null
 let TreeHits = 0
 let Saw: Sprite = null
+let gApple: Sprite = null
 let AppleSprite2: Sprite = null
 let AppleSprite: Sprite = null
 let Tree: Sprite = null
