@@ -6,6 +6,41 @@ namespace SpriteKind {
     export const TakeAwayTree = SpriteKind.create()
     export const BigNoms = SpriteKind.create()
 }
+sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
+    Character.ax = -54
+    timer.background(function () {
+        pauseUntil(() => Character.x < 1236)
+        Character.ax = 0
+        Character.sayText("What was that?", 3000, true)
+        timer.after(3500, function () {
+            Direction = 1
+            Character.sayText("I must stop them!", 2000, true)
+            timer.after(2500, function () {
+                timer.background(function () {
+                    Character.ax = 250
+                    pauseUntil(() => Character.x > 1275)
+                    Character.ax = 100
+                    animation.runImageAnimation(
+                    CutSprite,
+                    assets.animation`Next Level Blackout`,
+                    100,
+                    false
+                    )
+                    timer.after(1400, function () {
+                        Character.ax = 0
+                        scene.setBackgroundColor(12)
+                        animation.runImageAnimation(
+                        CutSprite,
+                        assets.animation`Next Level Blackout0`,
+                        100,
+                        false
+                        )
+                    })
+                })
+            })
+        })
+    })
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
         if (Character.vy == 0) {
@@ -232,31 +267,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
             cutscene()
         })
     }
-})
-sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
-    Character.ax = -54
-    timer.background(function () {
-        pauseUntil(() => Character.x < 1236)
-        Character.ax = 0
-        Character.sayText("What was that?", 3000, true)
-        timer.after(3500, function () {
-            Direction = 1
-            Character.sayText("I must stop them!", 2000, true)
-            timer.after(2500, function () {
-                timer.background(function () {
-                    Character.ax = 250
-                    pauseUntil(() => Character.x > 1275)
-                    Character.ax = 100
-                    animation.runImageAnimation(
-                    CutSprite,
-                    assets.animation`Next Level Blackout`,
-                    100,
-                    false
-                    )
-                })
-            })
-        })
-    })
 })
 function cutscene () {
     if (CutscenePart == 1) {

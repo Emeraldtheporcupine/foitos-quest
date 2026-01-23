@@ -46,6 +46,12 @@
         "tilemapTile": true,
         "displayName": "GoldenApple"
     },
+    "tile8": {
+        "data": "hwQQABAAAAAi/////////yz/////////LP////////8i/////////yz/////////LP////////8i/////////yz/////////wv////////8i/////////8L/////////wv////////8i/////////8L/////////wv////////8i/////////w==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile"
+    },
     "level1": {
         "id": "level1",
         "mimeType": "application/mkcd-tilemap",
