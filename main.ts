@@ -48,7 +48,8 @@ function SpawnStuff () {
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.BigNoms)
         tiles.placeOnTile(gApple, gAppleSpawn)
-        gApple.x += 3
+        gApple.x += 4
+        gApple.y += 3
         tiles.setTileAt(gAppleSpawn, assets.tile`transparency16`)
         animation.runImageAnimation(
         gApple,
