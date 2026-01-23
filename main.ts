@@ -85,6 +85,13 @@ function SetupAnim () {
     characterAnimations.rule(Predicate.Moving, Predicate.FacingLeft)
     )
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.BigNoms, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    music.play(music.createSoundEffect(WaveShape.Square, 975, 5000, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
+    music.play(music.createSoundEffect(WaveShape.Square, 975, 5000, 141, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
+    music.play(music.createSoundEffect(WaveShape.Square, 975, 5000, 82, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
+    music.play(music.createSoundEffect(WaveShape.Square, 975, 5000, 19, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
     if (Character.tilemapLocation().column == 79 && Character.tilemapLocation().row == 7 && Cutscene == false) {
         music.stopAllSounds()
