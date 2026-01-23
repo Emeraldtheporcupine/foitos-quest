@@ -5,6 +5,24 @@ namespace SpriteKind {
     export const Claw = SpriteKind.create()
     export const TakeAwayTree = SpriteKind.create()
 }
+sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
+    Character.ax = -54
+    timer.background(function () {
+        pauseUntil(() => Character.x < 1236)
+        Character.ax = 0
+        Character.sayText("What was that?", 3000, true)
+        timer.after(3500, function () {
+            Character.sayText("I must stop them!", 2000, true)
+            timer.after(2500, function () {
+                timer.background(function () {
+                    Character.ax = 300
+                    pauseUntil(() => Character.x > 1300)
+                    Character.ax = 0
+                })
+            })
+        })
+    })
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
         if (Character.vy == 0) {
@@ -194,13 +212,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
             cutscene()
         })
     }
-})
-sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
-    Character.ax = -54
-    timer.after(4000, function () {
-        Character.ax = 0
-        Character.sayText("What was that?", 2000, true)
-    })
 })
 function cutscene () {
     if (CutscenePart == 1) {
