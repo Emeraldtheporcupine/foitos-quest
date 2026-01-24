@@ -6,41 +6,6 @@ namespace SpriteKind {
     export const TakeAwayTree = SpriteKind.create()
     export const BigNoms = SpriteKind.create()
 }
-sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
-    Character.ax = -54
-    timer.background(function () {
-        pauseUntil(() => Character.x < 1236)
-        Character.ax = 0
-        Character.sayText("What was that?", 3000, true)
-        timer.after(3500, function () {
-            Direction = 1
-            Character.sayText("I must stop them!", 2000, true)
-            timer.after(2500, function () {
-                timer.background(function () {
-                    Character.ax = 250
-                    pauseUntil(() => Character.x > 1275)
-                    Character.ax = 100
-                    animation.runImageAnimation(
-                    CutSprite,
-                    assets.animation`Next Level Blackout`,
-                    100,
-                    false
-                    )
-                    timer.after(1400, function () {
-                        Character.ax = 0
-                        scene.setBackgroundColor(12)
-                        animation.runImageAnimation(
-                        CutSprite,
-                        assets.animation`Next Level Blackout0`,
-                        100,
-                        false
-                        )
-                    })
-                })
-            })
-        })
-    })
-})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
         if (Character.vy == 0) {
@@ -268,6 +233,10 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sp
         })
     }
 })
+sprites.onDestroyed(SpriteKind.TakeAwayTree, function (sprite) {
+    CutscenePart = 6
+    cutscene()
+})
 function cutscene () {
     if (CutscenePart == 1) {
         Saw = sprites.create(img`
@@ -359,6 +328,64 @@ function cutscene () {
                 })
             })
         })
+    } else if (CutscenePart == 6) {
+        Character.ax = -54
+        timer.background(function () {
+            pauseUntil(() => Character.x < 1236)
+            Character.ax = 0
+            Character.sayText("What was that?", 3000, true)
+            timer.after(3500, function () {
+                Direction = 1
+                Character.sayText("I must stop them!", 2000, true)
+                timer.after(2500, function () {
+                    timer.background(function () {
+                        Character.ax = 250
+                        pauseUntil(() => Character.x > 1275)
+                        Character.ax = 100
+                        animation.runImageAnimation(
+                        CutSprite,
+                        assets.animation`Next Level Blackout`,
+                        100,
+                        false
+                        )
+                        timer.after(1400, function () {
+                            Character.ax = 250
+                            scene.setBackgroundColor(12)
+                            tiles.setCurrentTilemap(tilemap`level`)
+                            tiles.placeOnTile(Character, tiles.getTileLocation(0, 13))
+                            scene.cameraFollowSprite(Character)
+                            CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
+                            sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+                            sprites.destroyAllSpritesOfKind(SpriteKind.BigNoms)
+                            animation.runImageAnimation(
+                            CutSprite,
+                            assets.animation`Next Level Blackout0`,
+                            100,
+                            false
+                            )
+                            timer.after(1000, function () {
+                                CutscenePart += 1
+                                cutscene()
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    } else if (CutscenePart == 7) {
+        Character.ax = 0
+        Character.sayText("I saw it go this way...", 2000, true)
+        timer.after(2500, function () {
+            Character.sayText("It must be close by.", 2000, true)
+            timer.after(2000, function () {
+                Cutscene = false
+                music.stopAllSounds()
+                music.play(music.createSong(assets.song`Nightlife City`), music.PlaybackMode.LoopingInBackground)
+                sprites.destroy(CutSprite)
+            })
+        })
+    } else {
+    	
     }
 }
 sprites.onOverlap(SpriteKind.Fling, SpriteKind.BackgroundTree, function (sprite, otherSprite) {
