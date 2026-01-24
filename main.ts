@@ -351,6 +351,7 @@ function cutscene () {
                         timer.after(1400, function () {
                             scene.setBackgroundImage(assets.image`myImage`)
                             Character.ax = 250
+                            scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal)
                             tiles.setCurrentTilemap(tilemap`level`)
                             tiles.placeOnTile(Character, tiles.getTileLocation(0, 13))
                             scene.cameraFollowSprite(Character)
