@@ -350,7 +350,7 @@ function cutscene () {
                         )
                         timer.after(1400, function () {
                             Character.ax = 250
-                            scene.setBackgroundColor(12)
+                            scene.setBackgroundColor(15)
                             tiles.setCurrentTilemap(tilemap`level`)
                             tiles.placeOnTile(Character, tiles.getTileLocation(0, 13))
                             scene.cameraFollowSprite(Character)
@@ -363,6 +363,8 @@ function cutscene () {
                             100,
                             false
                             )
+                            music.stopAllSounds()
+                            music.play(music.createSong(assets.song`Welcome to the City`), music.PlaybackMode.LoopingInBackground)
                             timer.after(1000, function () {
                                 CutscenePart += 1
                                 cutscene()

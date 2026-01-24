@@ -47,13 +47,13 @@
         "displayName": "GoldenApple"
     },
     "tile8": {
-        "data": "hwQQABAAAAAi/////////yr/9///////Kn93//////8i//f//////yr//////1//Kv//////VfUi//////9f/yr/////////ov////////8i/////////6L/////////ov////////8i//8v/////6L//yLy////ov//L/////8i/////////w==",
+        "data": "hwQQABAAAAAizMzMzMzMzCrMx8zMzMzMKnx3zMzMzMwizMfMzMzMzCrMzMzMzFzMKszMzMzMVcUizMzMzMxczCrMzMzMzMzMoszMzMzMzMwizMzMzMzMzKLMzMzMzMzMoszMzMzMzMwizMwszMzMzKLMzCLCzMzMoszMLMzMzMwizMzMzMzMzA==",
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true,
         "displayName": "myTile"
     },
     "tile9": {
-        "data": "hwQQABAAAAD/////////////////////////////f/////////939////////3////L///////8vIv/////////y///////////////////////////////////////////////1////////X1X/////////9f///////////////////////w==",
+        "data": "hwQQABAAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMfMzMzMzMzMx3x8zMzMzMzHzMzMLMzMzMzMwsIszMzMzMzMzCzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzFzMzMzMzMXFXMzMzMzMzMxczMzMzMzMzMzMzMzMzMzMzMzA==",
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true,
         "displayName": "myTile0"
