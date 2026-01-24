@@ -61,10 +61,29 @@ function SpawnStuff () {
     }
     for (let AppleMachineSpawn of tiles.getTilesByType(assets.tile`myTile1`)) {
         Apple_Machine = sprites.create(assets.image`Vending Machine`, SpriteKind.ApplMchine)
+        Apple_Machine.z = -2
         tiles.placeOnTile(Apple_Machine, AppleMachineSpawn)
         tiles.setTileAt(AppleMachineSpawn, assets.tile`transparency16`)
     }
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.ApplMchine, function (sprite, otherSprite) {
+    if (State == "Rolling") {
+        sprite.vx = Direction * -35
+        sprite.vy = -50
+        AppleSprite = sprites.create(assets.image`Apple`, SpriteKind.Food)
+        AppleSprite.setPosition(otherSprite.x, otherSprite.y)
+        AppleSprite.vy = -50
+        AppleSprite.ay = 300
+        AppleSprite.x += randint(0, -8)
+        AppleSprite2 = sprites.create(assets.image`Apple`, SpriteKind.Food)
+        AppleSprite2.setPosition(otherSprite.x, otherSprite.y)
+        AppleSprite2.vy = -50
+        AppleSprite2.ay = 300
+        AppleSprite2.x += randint(0, 7)
+    } else {
+    	
+    }
+})
 function SetupAnim () {
     characterAnimations.loopFrames(
     Character,
