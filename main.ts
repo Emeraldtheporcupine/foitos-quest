@@ -349,8 +349,8 @@ function cutscene () {
                         false
                         )
                         timer.after(1400, function () {
+                            scene.setBackgroundImage(assets.image`myImage`)
                             Character.ax = 250
-                            scene.setBackgroundColor(15)
                             tiles.setCurrentTilemap(tilemap`level`)
                             tiles.placeOnTile(Character, tiles.getTileLocation(0, 13))
                             scene.cameraFollowSprite(Character)
