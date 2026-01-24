@@ -5,6 +5,7 @@ namespace SpriteKind {
     export const Claw = SpriteKind.create()
     export const TakeAwayTree = SpriteKind.create()
     export const BigNoms = SpriteKind.create()
+    export const ApplMchine = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Cutscene == false) {
@@ -57,6 +58,11 @@ function SpawnStuff () {
         200,
         true
         )
+    }
+    for (let AppleMachineSpawn of tiles.getTilesByType(assets.tile`myTile1`)) {
+        Apple_Machine = sprites.create(assets.image`Vending Machine`, SpriteKind.ApplMchine)
+        tiles.placeOnTile(Apple_Machine, AppleMachineSpawn)
+        tiles.setTileAt(AppleMachineSpawn, assets.tile`transparency16`)
     }
 }
 function SetupAnim () {
@@ -359,6 +365,7 @@ function cutscene () {
                             CutSprite.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
                             sprites.destroyAllSpritesOfKind(SpriteKind.Food)
                             sprites.destroyAllSpritesOfKind(SpriteKind.BigNoms)
+                            SpawnStuff()
                             animation.runImageAnimation(
                             CutSprite,
                             assets.animation`Next Level Blackout0`,
@@ -469,6 +476,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 let Claw: Sprite = null
 let TreeHits = 0
 let Saw: Sprite = null
+let Apple_Machine: Sprite = null
 let gApple: Sprite = null
 let AppleSprite2: Sprite = null
 let AppleSprite: Sprite = null

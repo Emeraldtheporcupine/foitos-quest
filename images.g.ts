@@ -194,6 +194,41 @@ ffffffffffffffffffffffffffff55577777777777555eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 9999999999999999999999999999999999999eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee888888888888888888888888888888888888888888888888888888
 9999999999999999999999999999999999999eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee888888888888888888888888888888888888888888888888888888
 `;
+            case "image5":
+            case "Vending Machine":return img`
+.5555555555555555555555.
+.54f44ff44ff44f444fff45.
+.5f4f4f4f4f4f4f444ff445.
+.5fff4ff44ff44f444f4445.
+.5f4f4f444f444fff4fff45.
+b5555555555555555555555b
+bbbbbbbbbbbbbbbbbbbbbbbb
+bbb9.969.9.969.9.969.bbb
+bbb.929.9.929.9.929.9bbb
+bbb92929.92929.92929.bbb
+bbb.92929.92929.92929bbb
+bbb9.929.9.929.9.929.bbb
+bbbe9e9e9e9e9e9e9e9e9bbb
+bbb9e969e9e969e9e969ebbb
+bbb.929.9.929.9.929.9bbb
+bbb92929.92929.92929.bbb
+bbb.92929.92929.92929bbb
+bbb9e929e9e929e9e929ebbb
+bbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbb
+bbbffffffffffffffffffbbb
+bbbffcffffffffffffcffbbb
+bbbffcfffcffffcfffcffbbb
+bbbffcfffcffffcfffcffbbb
+bbbfccccccccccccccccfbbb
+bbbffffffffffffffffffbbb
+bbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbb
+........................
+........................
+........................
+........................
+`;
         }
         return null;
     })

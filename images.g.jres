@@ -19,6 +19,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "myImage"
     },
+    "image5": {
+        "data": "hwQYACAAAAAAALC7u7u7u7u7u7u7uwAAVVVVu7u7u7u7u7u7u7sAAEX/X7u7u7u7u7u7u7u7AAD19FSbkJCekJC7////uwAARf9fCykJ6Snpu////LsAAEVEVJuSkp6SkrvPzPy7AAD1/19rKSlpKSm7///8uwAA9fRUm5CSnpCSu////LsAAEVPVAsJCekJ6bv///y7AABFRFSbkJCekJC7/8z8uwAA9f9fCykJ6Snpu////LsAAPX0VJuSkp6Skrv///y7AABFT1RrKSlpKSm7///8uwAARURUm5CSnpCSu////LsAAPX/XwsJCekJ6bv/zPy7AABFRF+bkJCekJC7///8uwAARURfCykJ6Snpu////LsAAEVEVJuSkp6Skrv///y7AAD1/19rKSlpKSm7z8z8uwAA9U9fm5CSnpCSu////LsAAPVEXwsJCekJ6bv///+7AABFRFS7u7u7u7u7u7u7uwAAVVVVu7u7u7u7u7u7u7sAAAAAsLu7u7u7u7u7u7u7AAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Vending Machine"
+    },
     "anim3": {
         "namespace": "myAnimations",
         "id": "anim3",
