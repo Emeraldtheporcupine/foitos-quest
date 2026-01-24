@@ -60,7 +60,7 @@ function SpawnStuff () {
         )
     }
     for (let AppleMachineSpawn of tiles.getTilesByType(assets.tile`myTile1`)) {
-        Apple_Machine = sprites.create(assets.image`Vending Machine`, SpriteKind.ApplMchine)
+        Apple_Machine = sprites.create(assets.image`Vending Machine6`, SpriteKind.ApplMchine)
         Apple_Machine.z = -2
         tiles.placeOnTile(Apple_Machine, AppleMachineSpawn)
         tiles.setTileAt(AppleMachineSpawn, assets.tile`transparency16`)
@@ -80,7 +80,14 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.ApplMchine, function (sprite, ot
         AppleSprite2.vy = -50
         AppleSprite2.ay = 300
         AppleSprite2.x += randint(0, 7)
-    } else {
+        if (otherSprite.image == assets.image`Vending Machine6`) {
+            otherSprite.setImage(assets.image`Vending Machine4`)
+        } else if (otherSprite.image == assets.image`Vending Machine4`) {
+            otherSprite.setImage(assets.image`Vending Machine2`)
+        } else if (otherSprite.image == assets.image`Vending Machine2`) {
+            otherSprite.setImage(assets.image`Vending Machine0`)
+        }
+    } else if (otherSprite.image == assets.image`Vending Machine0` || (!(State == "Rolling") || !(State == "Rolling") && otherSprite.image == assets.image`Vending Machine0`)) {
     	
     }
 })
