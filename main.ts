@@ -68,12 +68,14 @@ function SpawnStuff () {
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.ApplMchine, function (sprite, otherSprite) {
     if (State == "Rolling") {
-        if (otherSprite.image == assets.image`Vending Machine6`) {
-            otherSprite.setImage(assets.image`Vending Machine4`)
-        } else if (otherSprite.image == assets.image`Vending Machine4`) {
-            otherSprite.setImage(assets.image`Vending Machine2`)
-        } else if (otherSprite.image == assets.image`Vending Machine2`) {
-            otherSprite.setImage(assets.image`Vending Machine0`)
+        for (let ApplMchines of sprites.allOfKind(SpriteKind.ApplMchine)) {
+            if (ApplMchines.image == assets.image`Vending Machine6`) {
+                ApplMchines.setImage(assets.image`Vending Machine4`)
+            } else if (ApplMchines.image == assets.image`Vending Machine4`) {
+                ApplMchines.setImage(assets.image`Vending Machine2`)
+            } else if (ApplMchines.image == assets.image`Vending Machine2`) {
+                ApplMchines.setImage(assets.image`Vending Machine0`)
+            }
         }
         sprite.vx = Direction * -35
         sprite.vy = -50
